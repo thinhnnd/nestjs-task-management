@@ -12,9 +12,13 @@ export class TasksService {
         return this.tasks;
     }
 
+    getTaskById(id: string): Task {
+        return this.tasks.find( task => task.id === id);
+    }
+
     public createTask(createTaskDto: CreateTaskDto): Task {
         const { title, description } = createTaskDto;
-        
+
         const task: Task = {
             id: uuidv1(),
             title,
@@ -24,5 +28,10 @@ export class TasksService {
 
         this.tasks.push(task);
         return task;
+    }
+
+    public deleteTask(id: string): void {
+        this.tasks = this.tasks.filter( task => task.id != id)
+        // return { success: true, message: "Delete succesfully"};
     }
 }
