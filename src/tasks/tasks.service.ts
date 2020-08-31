@@ -71,7 +71,8 @@ export class TasksService {
     } 
 
     public deleteTask(id: string): void {
-        this.tasks = this.tasks.filter( task => task.id != id)
+        const found = this.getTaskById(id);
+        this.tasks = this.tasks.filter( task => task.id != found.id);
         // return { success: true, message: "Delete succesfully"};
     }
 }
