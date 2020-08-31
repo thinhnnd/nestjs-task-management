@@ -1,78 +1,74 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Task } from './task.model';
-import { TaskStatus } from './task.model';
-import { v1 as uuidv1 } from 'uuid';
+import { TaskStatus } from './task-status.enum';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { IUpdateTaskDto } from './dto/update-task.dto';
 import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
 
 @Injectable()
 export class TasksService {
-    private tasks: Task[] = [];
+    // public getAllTasks(): Task[] {
+    //     return this.tasks;
+    // }
 
-    public getAllTasks(): Task[] {
-        return this.tasks;
-    }
+    // getTaskWithFilters(filterDto: GetTasksFilterDto): Task[] {
+    //     const { status, search } = filterDto;
+    //     let tasks = this.getAllTasks();
 
-    getTaskWithFilters(filterDto: GetTasksFilterDto): Task[] {
-        const { status, search } = filterDto;
-        let tasks = this.getAllTasks();
-
-        if(status) {
-            tasks = tasks.filter( task => task.status === status);
-        }
+    //     if(status) {
+    //         tasks = tasks.filter( task => task.status === status);
+    //     }
         
-        if(search) {
-            tasks = tasks.filter( task => 
-                task.title.includes(search) || 
-                task.description.includes(search)
-            );
-        }
+    //     if(search) {
+    //         tasks = tasks.filter( task => 
+    //             task.title.includes(search) || 
+    //             task.description.includes(search)
+    //         );
+    //     }
 
-        return tasks;
-    }
+    //     return tasks;
+    // }
 
-    getTaskById(id: string): Task {
-        const found = this.tasks.find( task => task.id === id);
+    // getTaskById(id: string): Task {
+    //     const found = this.tasks.find( task => task.id === id);
 
-        //Not found task
-        if(!found) {
-            throw new NotFoundException(`Task with id "${id}" not found`); 
-        }
+    //     //Not found task
+    //     if(!found) {
+    //         throw new NotFoundException(`Task with id "${id}" not found`); 
+    //     }
 
-        //Found task
-        return found;
-    }
+    //     //Found task
+    //     return found;
+    // }
 
-    public createTask(createTaskDto: CreateTaskDto): Task {
-        const { title, description } = createTaskDto;
+    // public createTask(createTaskDto: CreateTaskDto): Task {
+    //     const { title, description } = createTaskDto;
 
-        const task: Task = {
-            id: uuidv1(),
-            title,
-            description,
-            status: TaskStatus.OPEN,
-        };
+    //     const task: Task = {
+    //         id: uuidv1(),
+    //         title,
+    //         description,
+    //         status: TaskStatus.OPEN,
+    //     };
 
-        this.tasks.push(task);
-        return task;
-    }
+    //     this.tasks.push(task);
+    //     return task;
+    // }
 
-    public updateTask(id: string, updateTaskDto: IUpdateTaskDto): Task {
-        let task = this.getTaskById(id)
-        task = { ...task, ...updateTaskDto }
-        return task;
-    }
+    // public updateTask(id: string, updateTaskDto: IUpdateTaskDto): Task {
+    //     let task = this.getTaskById(id)
+    //     task = { ...task, ...updateTaskDto }
+    //     return task;
+    // }
 
-    public updateTaskStatus(id: string, status: TaskStatus) : Task {
-        const task = this.getTaskById(id);
-        task.status = status;
-        return task;
-    } 
+    // public updateTaskStatus(id: string, status: TaskStatus) : Task {
+    //     const task = this.getTaskById(id);
+    //     task.status = status;
+    //     return task;
+    // } 
 
-    public deleteTask(id: string): void {
-        const found = this.getTaskById(id);
-        this.tasks = this.tasks.filter( task => task.id != found.id);
-        // return { success: true, message: "Delete succesfully"};
-    }
+    // public deleteTask(id: string): void {
+    //     const found = this.getTaskById(id);
+    //     this.tasks = this.tasks.filter( task => task.id != found.id);
+    //     // return { success: true, message: "Delete succesfully"};
+    // }
 }

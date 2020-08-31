@@ -1,4 +1,4 @@
-import { TaskStatus } from '../task.model';
+import { TaskStatus } from '../task-status.enum';
 
 export interface IUpdateTaskDto {
     title?: string;
