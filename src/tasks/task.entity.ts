@@ -11,11 +11,14 @@ export class Task extends BaseEntity {
     title: string;
 
     @Column()
-    description: string
+    description: string;
 
     @Column()
-    status: TaskStatus
+    status: TaskStatus;
 
     @ManyToOne(type => User, user => user.tasks, { eager: false} )
-    user: User
+    user: User;
+
+    @Column()
+    userId: number; //this is auto created when use Many to One decorator
 }
